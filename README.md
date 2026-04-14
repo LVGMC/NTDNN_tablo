@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="lv">
 <head>
   <meta charset="UTF-8" />
@@ -18,9 +17,10 @@
       height: 100vh; 
       width: 100vw; 
       display: grid; 
-      grid-template-columns: minmax(280px, 22%) 1fr minmax(300px, 26%); 
+      grid-template-columns: 340px 1fr 360px; 
       gap: 16px; 
       padding: 16px;
+      /* NOŅĒMU margin: auto - tas centrēja */
     }
 
     /* Kreisā kolonna — nedēļas plāns */
@@ -33,11 +33,10 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      min-width: 0;
     }
 
     .weekly-panel h2 {
-      font-size: 1.4rem;
+      font-size: 1.6rem;
       font-weight: 700;
       color: #fbbf24;
       margin-bottom: 12px;
@@ -49,7 +48,7 @@
     .plan-list {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 8px;
       overflow-y: auto;
       flex: 1;
     }
@@ -57,29 +56,29 @@
     .plan-day {
       background: rgba(251, 191, 36, 0.1);
       border-radius: 12px;
-      padding: 10px 14px;
+      padding: 12px 14px;
       border-left: 3px solid #fbbf24;
       flex-shrink: 0;
     }
 
     .plan-day strong {
       color: #fbbf24;
-      font-size: 0.95rem;
+      font-size: 1rem;
       display: block;
-      margin-bottom: 3px;
+      margin-bottom: 4px;
     }
 
     .plan-day p {
       color: #e2e8f0;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       margin: 2px 0;
       line-height: 1.3;
     }
 
     .plan-day .hours {
       color: #94a3b8;
-      font-size: 0.75rem;
-      margin-top: 3px;
+      font-size: 0.8rem;
+      margin-top: 4px;
     }
 
     /* Vidējā kolonna — laikapstākļi */
@@ -87,7 +86,6 @@
       display: flex;
       flex-direction: column;
       gap: 16px;
-      min-width: 0;
     }
 
     .main-weather {
@@ -113,7 +111,7 @@
     }
 
     .today-date {
-      font-size: 1.6rem;
+      font-size: 1.8rem;
       font-weight: 700;
       color: #f8fafc;
     }
@@ -121,9 +119,9 @@
     .solar-badge {
       background: rgba(251, 191, 36, 0.2);
       color: #fbbf24;
-      padding: 6px 16px;
+      padding: 8px 16px;
       border-radius: 40px;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       font-weight: 600;
       white-space: nowrap;
     }
@@ -137,7 +135,7 @@
     }
 
     .temp-main {
-      font-size: 4.5rem;
+      font-size: 5rem;
       font-weight: 800;
       color: #f8fafc;
       line-height: 1;
@@ -150,23 +148,23 @@
     }
 
     .weather-desc {
-      font-size: 1.4rem;
+      font-size: 1.6rem;
       color: #fbbf24;
       font-weight: 600;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
     .solar-tip {
-      font-size: 1rem;
+      font-size: 1.1rem;
       color: #94a3b8;
       margin-bottom: 16px;
     }
 
     .weather-details {
       display: flex;
-      gap: 20px;
+      gap: 24px;
       color: #e2e8f0;
-      font-size: 0.95rem;
+      font-size: 1rem;
       flex-wrap: wrap;
     }
 
@@ -180,7 +178,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 16px;
-      height: 220px;
+      height: 200px;
       flex-shrink: 0;
     }
 
@@ -197,7 +195,7 @@
 
     .forecast-box h3 {
       color: #fbbf24;
-      font-size: 0.95rem;
+      font-size: 1rem;
       margin-bottom: 12px;
       text-transform: uppercase;
       letter-spacing: 1px;
@@ -226,26 +224,26 @@
 
     .forecast-item .time {
       color: #94a3b8;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       margin-bottom: 4px;
     }
 
     .forecast-item .temp {
       color: #f8fafc;
-      font-size: 1.3rem;
+      font-size: 1.4rem;
       font-weight: 700;
       margin: 4px 0;
     }
 
     .forecast-item .desc {
       color: #e2e8f0;
-      font-size: 0.75rem;
+      font-size: 0.8rem;
       line-height: 1.2;
     }
 
     .forecast-item img {
-      width: 40px;
-      height: 40px;
+      width: 45px;
+      height: 45px;
       margin: 4px auto;
     }
 
@@ -259,11 +257,10 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      min-width: 0;
     }
 
     .gallery-panel h2 {
-      font-size: 1.4rem;
+      font-size: 1.6rem;
       font-weight: 700;
       color: #fbbf24;
       margin-bottom: 12px;
@@ -307,7 +304,7 @@
       background: linear-gradient(transparent, rgba(0,0,0,0.8));
       color: #f8fafc;
       padding: 16px 8px 8px;
-      font-size: 0.8rem;
+      font-size: 0.85rem;
     }
 
     .loading {
@@ -336,23 +333,6 @@
 
     .loading {
       animation: pulse 2s infinite;
-    }
-
-    /* Mazāki ekrāni - minimālais atbalsts */
-    @media (max-width: 1200px) {
-      .dashboard {
-        grid-template-columns: minmax(260px, 24%) 1fr minmax(280px, 28%);
-        gap: 12px;
-        padding: 12px;
-      }
-      
-      .temp-main {
-        font-size: 3.5rem;
-      }
-      
-      .weather-desc {
-        font-size: 1.2rem;
-      }
     }
   </style>
 </head>
@@ -451,7 +431,7 @@ async function showWeather() {
     else if (main === "Snow") tip = "❄️ Notīri paneļus (sniegs)";
     
     $('currentWeatherBlock').innerHTML = `
-      <img src="${getIconUrl(icon)}" style="width:120px;height:120px;filter:drop-shadow(0 0 20px rgba(251,191,36,0.3));flex-shrink:0;">
+      <img src="${getIconUrl(icon)}" style="width:130px;height:130px;filter:drop-shadow(0 0 20px rgba(251,191,36,0.3));flex-shrink:0;">
       <div class="temp-main">${temp}°</div>
       <div class="weather-info">
         <div class="weather-desc">${desc.charAt(0).toUpperCase() + desc.slice(1)}</div>
@@ -477,7 +457,7 @@ async function showHourly() {
       return `
         <div class="forecast-item">
           <div class="time">${hh}:00</div>
-          <img src="${getIconUrl(item.weather[0].icon)}" style="width:40px;height:40px;margin:4px auto;">
+          <img src="${getIconUrl(item.weather[0].icon)}" style="width:45px;height:45px;margin:4px auto;">
           <div class="temp">${Math.round(item.main.temp)}°C</div>
           <div class="desc">${item.weather[0].description}</div>
         </div>`;
@@ -511,7 +491,7 @@ async function showDays() {
       return `
         <div class="forecast-item">
           <div class="time">${labels[i]}</div>
-          <img src="${getIconUrl(icon)}" style="width:40px;height:40px;margin:4px auto;">
+          <img src="${getIconUrl(icon)}" style="width:45px;height:45px;margin:4px auto;">
           <div class="temp">${max}° / ${min}°</div>
           <div class="desc">${desc}</div>
         </div>`;
