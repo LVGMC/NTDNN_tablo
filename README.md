@@ -20,7 +20,7 @@
       display: grid; 
       grid-template-columns: 380px 1fr 420px; 
       gap: 20px; 
-      padding: 20px;
+      padding: 0px;
       /* NOŅĒMU margin: auto - tas bija centrēšana! */
     }
 
