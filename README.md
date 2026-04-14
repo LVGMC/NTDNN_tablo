@@ -1,86 +1,36 @@
+<!DOCTYPE html>
 <html lang="lv">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Saules paneļi - Dashboard | Pilns ekrāns</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Saules paneļi - Dashboard</title>
   <style>
-    /* GLOBĀLAIS RESET - pilnīga kontrole pār margin/padding */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
 
-    /* HTML un BODY - bez jebkādām atstarpēm, pilns platums un augstums */
-    html, body {
-      width: 100%;
+    html, body { 
       height: 100%;
-      margin: 0;
-      padding: 0;
-      overflow-x: hidden;   /* paslēpj horizontālo joslu, ja kaut kas pārkāpj */
-      overflow-y: auto;      /* vertikālā ritināšana ir atļauta, bet nekas netiek nogriezts */
-      background: linear-gradient(145deg, #0f172a 0%, #1e3a5f 50%, #0ea5e9 100%);
-      /* fona gradientam jāaptver viss, arī ritināšanas gadījumā */
-      background-attachment: fixed;
-    }
-
-    /* DASHBOARD KONTEINERS - pilns platums bez jebkādas papildus atkāpes */
-    .dashboard {
       width: 100%;
-      min-height: 100vh;     /* vismaz visa ekrāna augstums, bet var augt */
+      overflow: hidden;
+      background: linear-gradient(145deg, #0f172a 0%, #1e3a5f 50%, #0ea5e9 100%);
+    }
+
+    .dashboard { 
+      height: 100vh;
+      width: 100vw;
       display: grid;
-      
-      /* TRĪS KOLONNAS, KAS AIZPILDA VISU PLATUMU: 
-         kreisā (min 260px, elastīga), vidējā (1fr - aizņem lieko), labā (min 280px, elastīga) */
-      grid-template-columns: minmax(280px, 360px) 1fr minmax(300px, 420px);
-      
-      /* Atstarpes iekšpusē */
-      gap: 20px;
-      
-      /* PADDING AP DASHBOARD - BET TAS NEKAVĒ AIZPILDĪT VISU PLATUMU, 
-         jo padding ir iekšējā atstarpe, nevis mala */
-      padding: 20px;
-      
-      /* Nodrošina, ka konteiners sākas no pašas kreisās malas (bez jebkāda auto margin) */
-      margin: 0 auto;
+      grid-template-columns: minmax(280px, 1fr) 2fr minmax(300px, 1fr);
+      gap: 0;
     }
 
-    /* RESPONSĪVĀ LĪDZINĀŠANA - šaurākos ekrānos pāriet uz divām kolonnām,
-       bet joprojām pilns platums bez atstarpēm malās */
-    @media (max-width: 1100px) {
-      .dashboard {
-        grid-template-columns: 1fr 1fr;
-        gap: 16px;
-        padding: 16px;
-      }
-      .gallery-panel {
-        grid-column: 1 / -1;
-      }
-    }
-
-    /* Ļoti šaurām ierīcēm (mobilais) - viena kolonna, pilns platums */
-    @media (max-width: 680px) {
-      .dashboard {
-        grid-template-columns: 1fr;
-        gap: 16px;
-        padding: 12px;
-      }
-      .weekly-panel, .weather-panel, .gallery-panel {
-        grid-column: 1 / -1;
-      }
-    }
-
-    /* ---------- PANEĻU STILI (NEMAINĪTI, BET NODROŠINA, KA IZSKATĀS LABI) ---------- */
+    /* Kreisā kolonna — nedēļas plāns */
     .weekly-panel {
       background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(20px);
-      border-radius: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-right: 1px solid rgba(255, 255, 255, 0.15);
       padding: 24px;
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      transition: all 0.2s ease;
     }
 
     .weekly-panel h2 {
@@ -97,7 +47,7 @@
       flex-direction: column;
       gap: 8px;
       overflow-y: auto;
-      max-height: calc(100vh - 140px);
+      flex: 1;
     }
 
     .plan-day {
@@ -108,6 +58,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
+      flex-shrink: 0;
     }
 
     .plan-day strong {
@@ -129,17 +80,17 @@
       margin-top: 4px;
     }
 
+    /* Vidējā kolonna — laikapstākļi */
     .weather-panel {
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 0;
     }
 
     .main-weather {
       background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(20px);
-      border-radius: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-right: 1px solid rgba(255, 255, 255, 0.15);
       padding: 30px;
       flex: 1;
       display: flex;
@@ -153,8 +104,6 @@
       margin-bottom: 20px;
       padding-bottom: 16px;
       border-bottom: 2px solid rgba(251, 191, 36, 0.3);
-      flex-wrap: wrap;
-      gap: 10px;
     }
 
     .today-date {
@@ -176,7 +125,6 @@
       display: flex;
       align-items: center;
       gap: 30px;
-      flex-wrap: wrap;
       flex: 1;
     }
 
@@ -209,7 +157,6 @@
       gap: 30px;
       color: #e2e8f0;
       font-size: 1.1rem;
-      flex-wrap: wrap;
     }
 
     .weather-details span {
@@ -221,14 +168,13 @@
     .forecast-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 20px;
+      height: 280px;
     }
 
     .forecast-box {
       background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(20px);
-      border-radius: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-right: 1px solid rgba(255, 255, 255, 0.15);
       padding: 20px;
       display: flex;
       flex-direction: column;
@@ -246,8 +192,7 @@
       display: flex;
       gap: 12px;
       flex: 1;
-      align-items: stretch;
-      flex-wrap: wrap;
+      align-items: center;
     }
 
     .forecast-item {
@@ -256,7 +201,7 @@
       border-radius: 16px;
       padding: 16px;
       text-align: center;
-      min-width: 90px;
+      height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -280,11 +225,10 @@
       font-size: 0.85rem;
     }
 
+    /* Labā kolonna — galerija */
     .gallery-panel {
       background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(20px);
-      border-radius: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
       padding: 24px;
       display: flex;
       flex-direction: column;
@@ -302,11 +246,10 @@
 
     .gallery-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      grid-template-columns: 1fr 1fr;
       gap: 12px;
       flex: 1;
       overflow-y: auto;
-      max-height: calc(100vh - 140px);
     }
 
     .gallery-item {
@@ -314,7 +257,7 @@
       border-radius: 16px;
       overflow: hidden;
       background: rgba(255, 255, 255, 0.05);
-      aspect-ratio: 4 / 3;
+      aspect-ratio: 4/3;
     }
 
     .gallery-item img {
@@ -355,7 +298,6 @@
       color: #fecaca;
       padding: 20px;
       border-radius: 16px;
-      width: 100%;
     }
 
     @keyframes pulse {
@@ -363,20 +305,71 @@
       50% { opacity: 0.5; }
     }
 
-    /* Pielāgojums īpaši maziem augstumiem (lai nav pārmērīga ritināšana) */
-    @media (max-height: 700px) {
-      .plan-list {
-        max-height: 400px;
+    /* Responsive - tablet */
+    @media (max-width: 1200px) {
+      .dashboard {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
       }
-      .gallery-grid {
-        max-height: 400px;
+      .weather-panel {
+        grid-column: 1 / -1;
+        grid-row: 1;
+      }
+      .weekly-panel {
+        grid-column: 1;
+        grid-row: 2;
+        border-right: 1px solid rgba(255, 255, 255, 0.15);
+      }
+      .gallery-panel {
+        grid-column: 2;
+        grid-row: 2;
+      }
+      .main-weather {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+      }
+      .forecast-box {
+        border-right: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.15);
+      }
+    }
+
+    /* Responsive - mobile */
+    @media (max-width: 768px) {
+      .dashboard {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        overflow-y: auto;
+      }
+      .weather-panel {
+        grid-column: 1;
+        grid-row: 1;
+      }
+      .weekly-panel {
+        grid-column: 1;
+        grid-row: 2;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+      }
+      .gallery-panel {
+        grid-column: 1;
+        grid-row: 3;
+      }
+      .forecast-row {
+        grid-template-columns: 1fr;
+        height: auto;
+      }
+      .forecast-box {
+        border-right: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.15);
       }
     }
   </style>
+<base target="_blank">
 </head>
 <body>
   <div class="dashboard">
-    <!-- Kreisā kolonna - Nedēļas plāns -->
+    <!-- Kreisā kolonna -->
     <div class="weekly-panel">
       <h2>📋 Nedēļas plāns</h2>
       <div class="plan-list" id="weeklyPlanList">
@@ -384,7 +377,7 @@
       </div>
     </div>
 
-    <!-- Vidējā kolonna - Laikapstākļi -->
+    <!-- Vidējā kolonna -->
     <div class="weather-panel">
       <div class="main-weather">
         <div class="date-header">
@@ -412,7 +405,7 @@
       </div>
     </div>
 
-    <!-- Labā kolonna - Galerija -->
+    <!-- Labā kolonna -->
     <div class="gallery-panel">
       <h2>📸 Galerija</h2>
       <div class="gallery-grid" id="googlePhotosContainer">
@@ -431,9 +424,8 @@ function $(id) { return document.getElementById(id); }
 function updateDate() {
   const now = new Date();
   const options = { weekday: 'long', day: 'numeric', month: 'long' };
-  let formatted = now.toLocaleDateString('lv-LV', options);
-  formatted = formatted.charAt(0).toUpperCase() + formatted.slice(1);
-  $('currentDate').textContent = formatted;
+  const formatted = now.toLocaleDateString('lv-LV', options);
+  $('currentDate').textContent = formatted.charAt(0).toUpperCase() + formatted.slice(1);
 }
 
 function getIconUrl(icon) { 
@@ -443,14 +435,14 @@ function getIconUrl(icon) {
 async function fetchWeather() {
   const url = `https://api.openweathermap.org/data/2.5/weather?lat=${LAT}&lon=${LON}&appid=${API_KEY}&units=metric&lang=lv`;
   const res = await fetch(url);
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  if (!res.ok) throw new Error('HTTP ' + res.status);
   return await res.json();
 }
 
 async function fetchForecast() {
   const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${LAT}&lon=${LON}&appid=${API_KEY}&units=metric&lang=lv`;
   const res = await fetch(url);
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  if (!res.ok) throw new Error('HTTP ' + res.status);
   return await res.json();
 }
 
@@ -462,15 +454,15 @@ async function showWeather() {
     const desc = w.weather[0].description;
     const icon = w.weather[0].icon;
     const main = w.weather[0].main;
-    
+
     let tip = "🌍 Normāli apstākļi saules paneļiem";
     if (main === "Clear") tip = "☀️ Lieliska diena saules paneļiem!";
     else if (main === "Clouds") tip = "⛅ Vidēja efektivitāte (mākoņi)";
     else if (main === "Rain") tip = "🌧️ Zema ražība (lietus)";
     else if (main === "Snow") tip = "❄️ Notīri paneļus (sniegs)";
-    
+
     $('currentWeatherBlock').innerHTML = `
-      <img src="${getIconUrl(icon)}" style="width:140px;height:140px;filter:drop-shadow(0 8px 12px rgba(0,0,0,0.3));" alt="weather icon">
+      <img src="${getIconUrl(icon)}" style="width:140px;height:140px;filter:drop-shadow(0 0 20px rgba(251,191,36,0.3));">
       <div class="weather-info">
         <div class="temp-main">${temp}°C</div>
         <div class="weather-desc">${desc.charAt(0).toUpperCase() + desc.slice(1)}</div>
@@ -482,7 +474,7 @@ async function showWeather() {
         </div>
       </div>`;
   } catch (err) {
-    $('currentWeatherBlock').innerHTML = `<div class="error-message">❌ Neizdevās ielādēt laiku: ${err.message}</div>`;
+    $('currentWeatherBlock').innerHTML = `<div class="error-message">❌ ${err.message}</div>`;
   }
 }
 
@@ -490,14 +482,13 @@ async function showHourly() {
   try {
     const f = await fetchForecast();
     const items = f.list.slice(0, 3);
-    if (!items.length) throw new Error('Nav prognožu datu');
     $('hourly3h').innerHTML = items.map(item => {
       const t = new Date(item.dt * 1000);
       const hh = String(t.getHours()).padStart(2, '0');
       return `
         <div class="forecast-item">
           <div class="time">${hh}:00</div>
-          <img src="${getIconUrl(item.weather[0].icon)}" style="width:50px;height:50px;margin:8px auto; display:block;" alt="weather">
+          <img src="${getIconUrl(item.weather[0].icon)}" style="width:50px;height:50px;margin:8px auto;">
           <div class="temp">${Math.round(item.main.temp)}°C</div>
           <div class="desc">${item.weather[0].description}</div>
         </div>`;
@@ -518,10 +509,10 @@ async function showDays() {
       daily[d].icons.push(item.weather[0].icon);
       daily[d].descs.push(item.weather[0].description);
     });
-    
+
     const days = Object.keys(daily).slice(1, 4);
     const labels = ['Rīt', 'Parīt', 'Pēc 3 dienām'];
-    
+
     $('threeDaysForecast').innerHTML = days.map((d, i) => {
       const data = daily[d];
       const min = Math.round(Math.min(...data.temps));
@@ -531,8 +522,8 @@ async function showDays() {
       return `
         <div class="forecast-item">
           <div class="time">${labels[i]}</div>
-          <img src="${getIconUrl(icon)}" style="width:50px;height:50px;margin:8px auto; display:block;" alt="forecast">
-          <div class="temp">${min}°…${max}°C</div>
+          <img src="${getIconUrl(icon)}" style="width:50px;height:50px;margin:8px auto;">
+          <div class="temp">${min}° / ${max}°C</div>
           <div class="desc">${desc}</div>
         </div>`;
     }).join('');
@@ -552,7 +543,7 @@ function generatePlan() {
     { e: '🌿', t: 'Dārza laistīšana ar saules sūkni' },
     { e: '📈', t: 'Nedēļas atskaite par enerģiju' }
   ];
-  
+
   $('weeklyPlanList').innerHTML = days.map((day, i) => `
     <div class="plan-day">
       <strong>${day}</strong>
@@ -562,57 +553,30 @@ function generatePlan() {
 }
 
 function loadGallery() {
-  // Izmantojam dažādus attēlus no picsum, lai galerija izskatās daudzveidīga
-  // un aizpilda visu platumu ar režģi
-  const imageIds = [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26];
-  $('googlePhotosContainer').innerHTML = imageIds.map((id, idx) => `
+  const ids = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
+  $('googlePhotosContainer').innerHTML = ids.map((id, i) => `
     <div class="gallery-item">
-      <img src="https://picsum.photos/id/${id}/500/400" alt="Galerijas foto ${idx+1}" loading="lazy">
-      <span>🏞️ Ainava ${idx+1}</span>
+      <img src="https://picsum.photos/id/${id}/400/300" alt="Foto ${i+1}">
+      <span>Foto ${i+1}</span>
     </div>`).join('');
 }
 
-// Funkcija, lai nodrošinātu, ka dashboard vienmēr izmanto pilnu platumu
-// (papildus piesardzība, ja kaut kas mēģina ierobežot)
-function enforceFullWidth() {
-  // Pārliecināmies, ka body un html nav nekādu ierobežojumu
-  document.documentElement.style.margin = '0';
-  document.documentElement.style.padding = '0';
-  document.body.style.margin = '0';
-  document.body.style.padding = '0';
-  // Dashboard jau ir width: 100%, bet lai nebūtu jebkāda baltas malas
-  const dash = document.querySelector('.dashboard');
-  if (dash) {
-    dash.style.marginLeft = '0';
-    dash.style.marginRight = '0';
-    dash.style.maxWidth = '100%';
-  }
-}
-
 async function init() {
-  enforceFullWidth();
   updateDate();
   generatePlan();
   loadGallery();
   await showWeather();
   await showHourly();
   await showDays();
-  
-  // Atjaunināšana ik pēc 10 minūtēm
+
   setInterval(() => {
     updateDate();
     showWeather();
     showHourly();
     showDays();
   }, 600000);
-  
-  // Papildus: ja pārlūka izmērs mainās, pārliecināmies, ka layout paliek pilns
-  window.addEventListener('resize', () => {
-    enforceFullWidth();
-  });
 }
 
-// Palaist pēc DOM gatavības
 document.addEventListener('DOMContentLoaded', init);
 </script>
 </body>
