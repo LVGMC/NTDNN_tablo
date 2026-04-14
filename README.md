@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="lv">
 <head>
   <meta charset="UTF-8" />
@@ -17,98 +18,102 @@
       height: 100vh; 
       width: 100vw; 
       display: grid; 
-      grid-template-columns: 380px 1fr 420px; 
-      gap: 20px; 
-      padding: 20px;
+      grid-template-columns: minmax(280px, 22%) 1fr minmax(300px, 26%); 
+      gap: 16px; 
+      padding: 16px;
     }
 
     /* Kreisā kolonna — nedēļas plāns */
     .weekly-panel {
       background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(20px);
-      border-radius: 24px;
+      border-radius: 20px;
       border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 24px;
+      padding: 20px;
       display: flex;
       flex-direction: column;
       overflow: hidden;
+      min-width: 0;
     }
 
     .weekly-panel h2 {
-      font-size: 1.8rem;
+      font-size: 1.4rem;
       font-weight: 700;
       color: #fbbf24;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
       text-transform: uppercase;
       letter-spacing: 1px;
+      flex-shrink: 0;
     }
 
     .plan-list {
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      overflow: hidden;
+      gap: 6px;
+      overflow-y: auto;
+      flex: 1;
     }
 
     .plan-day {
       background: rgba(251, 191, 36, 0.1);
-      border-radius: 16px;
-      padding: 12px 16px;
-      border-left: 4px solid #fbbf24;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+      border-radius: 12px;
+      padding: 10px 14px;
+      border-left: 3px solid #fbbf24;
+      flex-shrink: 0;
     }
 
     .plan-day strong {
       color: #fbbf24;
-      font-size: 1.1rem;
+      font-size: 0.95rem;
       display: block;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
 
     .plan-day p {
       color: #e2e8f0;
-      font-size: 0.95rem;
+      font-size: 0.85rem;
       margin: 2px 0;
+      line-height: 1.3;
     }
 
     .plan-day .hours {
       color: #94a3b8;
-      font-size: 0.8rem;
-      margin-top: 4px;
+      font-size: 0.75rem;
+      margin-top: 3px;
     }
 
     /* Vidējā kolonna — laikapstākļi */
     .weather-panel {
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 16px;
+      min-width: 0;
     }
 
     .main-weather {
       background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(20px);
-      border-radius: 24px;
+      border-radius: 20px;
       border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 30px;
+      padding: 24px;
       flex: 1;
       display: flex;
       flex-direction: column;
+      min-height: 0;
     }
 
     .date-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
-      padding-bottom: 16px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
       border-bottom: 2px solid rgba(251, 191, 36, 0.3);
+      flex-shrink: 0;
     }
 
     .today-date {
-      font-size: 2rem;
+      font-size: 1.6rem;
       font-weight: 700;
       color: #f8fafc;
     }
@@ -116,151 +121,171 @@
     .solar-badge {
       background: rgba(251, 191, 36, 0.2);
       color: #fbbf24;
-      padding: 8px 20px;
+      padding: 6px 16px;
       border-radius: 40px;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 600;
+      white-space: nowrap;
     }
 
     .current-weather-display {
       display: flex;
       align-items: center;
-      gap: 30px;
+      gap: 24px;
       flex: 1;
+      min-height: 0;
     }
 
     .temp-main {
-      font-size: 6rem;
+      font-size: 4.5rem;
       font-weight: 800;
       color: #f8fafc;
       line-height: 1;
+      flex-shrink: 0;
     }
 
     .weather-info {
       flex: 1;
+      min-width: 0;
     }
 
     .weather-desc {
-      font-size: 1.8rem;
+      font-size: 1.4rem;
       color: #fbbf24;
       font-weight: 600;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .solar-tip {
-      font-size: 1.2rem;
+      font-size: 1rem;
       color: #94a3b8;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
 
     .weather-details {
       display: flex;
-      gap: 30px;
+      gap: 20px;
       color: #e2e8f0;
-      font-size: 1.1rem;
+      font-size: 0.95rem;
+      flex-wrap: wrap;
     }
 
     .weather-details span {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
 
     .forecast-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      height: 280px;
+      gap: 16px;
+      height: 220px;
+      flex-shrink: 0;
     }
 
     .forecast-box {
       background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(20px);
-      border-radius: 24px;
+      border-radius: 20px;
       border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 20px;
+      padding: 16px;
       display: flex;
       flex-direction: column;
+      min-width: 0;
     }
 
     .forecast-box h3 {
       color: #fbbf24;
-      font-size: 1.1rem;
-      margin-bottom: 16px;
+      font-size: 0.95rem;
+      margin-bottom: 12px;
       text-transform: uppercase;
       letter-spacing: 1px;
+      flex-shrink: 0;
     }
 
     .forecast-content {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       flex: 1;
-      align-items: center;
+      align-items: stretch;
+      min-height: 0;
     }
 
     .forecast-item {
       flex: 1;
       background: rgba(255, 255, 255, 0.05);
-      border-radius: 16px;
-      padding: 16px;
+      border-radius: 12px;
+      padding: 12px 8px;
       text-align: center;
-      height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      min-width: 0;
     }
 
     .forecast-item .time {
       color: #94a3b8;
-      font-size: 0.9rem;
-      margin-bottom: 8px;
+      font-size: 0.85rem;
+      margin-bottom: 4px;
     }
 
     .forecast-item .temp {
       color: #f8fafc;
-      font-size: 1.6rem;
+      font-size: 1.3rem;
       font-weight: 700;
-      margin: 8px 0;
+      margin: 4px 0;
     }
 
     .forecast-item .desc {
       color: #e2e8f0;
-      font-size: 0.85rem;
+      font-size: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .forecast-item img {
+      width: 40px;
+      height: 40px;
+      margin: 4px auto;
     }
 
     /* Labā kolonna — galerija */
     .gallery-panel {
       background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(20px);
-      border-radius: 24px;
+      border-radius: 20px;
       border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 24px;
+      padding: 20px;
       display: flex;
       flex-direction: column;
       overflow: hidden;
+      min-width: 0;
     }
 
     .gallery-panel h2 {
-      font-size: 1.6rem;
+      font-size: 1.4rem;
       font-weight: 700;
       color: #fbbf24;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
       text-transform: uppercase;
       letter-spacing: 1px;
+      flex-shrink: 0;
     }
 
     .gallery-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
       flex: 1;
+      overflow-y: auto;
     }
 
     .gallery-item {
       position: relative;
-      border-radius: 16px;
+      border-radius: 12px;
       overflow: hidden;
       background: rgba(255, 255, 255, 0.05);
+      aspect-ratio: 4/3;
     }
 
     .gallery-item img {
@@ -281,13 +306,13 @@
       right: 0;
       background: linear-gradient(transparent, rgba(0,0,0,0.8));
       color: #f8fafc;
-      padding: 20px 12px 12px;
-      font-size: 0.9rem;
+      padding: 16px 8px 8px;
+      font-size: 0.8rem;
     }
 
     .loading {
       color: #94a3b8;
-      font-size: 1.2rem;
+      font-size: 1rem;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -298,8 +323,9 @@
       background: rgba(220, 38, 38, 0.2);
       border: 1px solid rgba(220, 38, 38, 0.4);
       color: #fecaca;
-      padding: 20px;
-      border-radius: 16px;
+      padding: 16px;
+      border-radius: 12px;
+      font-size: 0.9rem;
     }
 
     /* Animācijas */
@@ -310,6 +336,23 @@
 
     .loading {
       animation: pulse 2s infinite;
+    }
+
+    /* Mazāki ekrāni - minimālais atbalsts */
+    @media (max-width: 1200px) {
+      .dashboard {
+        grid-template-columns: minmax(260px, 24%) 1fr minmax(280px, 28%);
+        gap: 12px;
+        padding: 12px;
+      }
+      
+      .temp-main {
+        font-size: 3.5rem;
+      }
+      
+      .weather-desc {
+        font-size: 1.2rem;
+      }
     }
   </style>
 </head>
@@ -408,7 +451,7 @@ async function showWeather() {
     else if (main === "Snow") tip = "❄️ Notīri paneļus (sniegs)";
     
     $('currentWeatherBlock').innerHTML = `
-      <img src="${getIconUrl(icon)}" style="width:140px;height:140px;filter:drop-shadow(0 0 20px rgba(251,191,36,0.3));">
+      <img src="${getIconUrl(icon)}" style="width:120px;height:120px;filter:drop-shadow(0 0 20px rgba(251,191,36,0.3));flex-shrink:0;">
       <div class="temp-main">${temp}°</div>
       <div class="weather-info">
         <div class="weather-desc">${desc.charAt(0).toUpperCase() + desc.slice(1)}</div>
@@ -434,7 +477,7 @@ async function showHourly() {
       return `
         <div class="forecast-item">
           <div class="time">${hh}:00</div>
-          <img src="${getIconUrl(item.weather[0].icon)}" style="width:50px;height:50px;margin:8px auto;">
+          <img src="${getIconUrl(item.weather[0].icon)}" style="width:40px;height:40px;margin:4px auto;">
           <div class="temp">${Math.round(item.main.temp)}°C</div>
           <div class="desc">${item.weather[0].description}</div>
         </div>`;
@@ -468,7 +511,7 @@ async function showDays() {
       return `
         <div class="forecast-item">
           <div class="time">${labels[i]}</div>
-          <img src="${getIconUrl(icon)}" style="width:50px;height:50px;margin:8px auto;">
+          <img src="${getIconUrl(icon)}" style="width:40px;height:40px;margin:4px auto;">
           <div class="temp">${max}° / ${min}°</div>
           <div class="desc">${desc}</div>
         </div>`;
