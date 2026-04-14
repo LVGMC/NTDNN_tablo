@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NTDNN_tablo</title>
+  <title>Saules paneļi - Dashboard</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
     
@@ -14,79 +14,66 @@
       background: linear-gradient(145deg, #0f172a 0%, #1e3a5f 50%, #0ea5e9 100%);
     }
 
-    /* Virsraksts pa kreisi, nevis centrā */
-    .header {
-      padding: 16px 16px 0 16px;
-      text-align: left;
-    }
-    
-    .header h1 {
-      color: #38bdf8;
-      font-size: 1.8rem;
-      font-weight: 600;
-      margin: 0;
-    }
-
     .dashboard { 
-      height: calc(100vh - 60px); /* Atņemu virsraksta augstumu */
+      height: 100vh; 
       width: 100vw; 
       display: grid; 
-      grid-template-columns: 340px 1fr 360px; 
-      gap: 16px; 
-      padding: 16px;
-      /* NAV margin: auto - sākam no kreisās malas! */
+      grid-template-columns: 380px 1fr 420px; 
+      gap: 20px; 
+      padding: 20px;
+      /* NOŅĒMU margin: auto - tas bija centrēšana! */
     }
 
     /* Kreisā kolonna — nedēļas plāns */
     .weekly-panel {
       background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(20px);
-      border-radius: 20px;
+      border-radius: 24px;
       border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 20px;
+      padding: 24px;
       display: flex;
       flex-direction: column;
       overflow: hidden;
     }
 
     .weekly-panel h2 {
-      font-size: 1.6rem;
+      font-size: 1.8rem;
       font-weight: 700;
       color: #fbbf24;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
       text-transform: uppercase;
       letter-spacing: 1px;
-      flex-shrink: 0;
     }
 
     .plan-list {
       display: flex;
       flex-direction: column;
       gap: 8px;
-      overflow-y: auto;
-      flex: 1;
+      overflow: hidden;
     }
 
     .plan-day {
       background: rgba(251, 191, 36, 0.1);
-      border-radius: 12px;
-      padding: 12px 14px;
-      border-left: 3px solid #fbbf24;
-      flex-shrink: 0;
+      border-radius: 16px;
+      padding: 12px 16px;
+      border-left: 4px solid #fbbf24;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .plan-day strong {
       color: #fbbf24;
-      font-size: 1rem;
+      font-size: 1.1rem;
       display: block;
       margin-bottom: 4px;
     }
 
     .plan-day p {
       color: #e2e8f0;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       margin: 2px 0;
-      line-height: 1.3;
     }
 
     .plan-day .hours {
@@ -99,33 +86,31 @@
     .weather-panel {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 20px;
     }
 
     .main-weather {
       background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(20px);
-      border-radius: 20px;
+      border-radius: 24px;
       border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 24px;
+      padding: 30px;
       flex: 1;
       display: flex;
       flex-direction: column;
-      min-height: 0;
     }
 
     .date-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
-      padding-bottom: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
       border-bottom: 2px solid rgba(251, 191, 36, 0.3);
-      flex-shrink: 0;
     }
 
     .today-date {
-      font-size: 1.8rem;
+      font-size: 2rem;
       font-weight: 700;
       color: #f8fafc;
     }
@@ -133,141 +118,125 @@
     .solar-badge {
       background: rgba(251, 191, 36, 0.2);
       color: #fbbf24;
-      padding: 8px 16px;
+      padding: 8px 20px;
       border-radius: 40px;
       font-size: 0.9rem;
       font-weight: 600;
-      white-space: nowrap;
     }
 
     .current-weather-display {
       display: flex;
       align-items: center;
-      gap: 24px;
+      gap: 30px;
       flex: 1;
-      min-height: 0;
     }
 
     .temp-main {
-      font-size: 5rem;
+      font-size: 6rem;
       font-weight: 800;
       color: #f8fafc;
       line-height: 1;
-      flex-shrink: 0;
     }
 
     .weather-info {
       flex: 1;
-      min-width: 0;
     }
 
     .weather-desc {
-      font-size: 1.6rem;
+      font-size: 1.8rem;
       color: #fbbf24;
       font-weight: 600;
       margin-bottom: 8px;
     }
 
     .solar-tip {
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       color: #94a3b8;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
     }
 
     .weather-details {
       display: flex;
-      gap: 24px;
+      gap: 30px;
       color: #e2e8f0;
-      font-size: 1rem;
-      flex-wrap: wrap;
+      font-size: 1.1rem;
     }
 
     .weather-details span {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
     }
 
     .forecast-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      height: 200px;
-      flex-shrink: 0;
+      gap: 20px;
+      height: 280px;
     }
 
     .forecast-box {
       background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(20px);
-      border-radius: 20px;
+      border-radius: 24px;
       border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 16px;
+      padding: 20px;
       display: flex;
       flex-direction: column;
-      min-width: 0;
     }
 
     .forecast-box h3 {
       color: #fbbf24;
-      font-size: 1rem;
-      margin-bottom: 12px;
+      font-size: 1.1rem;
+      margin-bottom: 16px;
       text-transform: uppercase;
       letter-spacing: 1px;
-      flex-shrink: 0;
     }
 
     .forecast-content {
       display: flex;
-      gap: 10px;
+      gap: 12px;
       flex: 1;
-      align-items: stretch;
-      min-height: 0;
+      align-items: center;
     }
 
     .forecast-item {
       flex: 1;
       background: rgba(255, 255, 255, 0.05);
-      border-radius: 12px;
-      padding: 12px 8px;
+      border-radius: 16px;
+      padding: 16px;
       text-align: center;
+      height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      min-width: 0;
     }
 
     .forecast-item .time {
       color: #94a3b8;
       font-size: 0.9rem;
-      margin-bottom: 4px;
+      margin-bottom: 8px;
     }
 
     .forecast-item .temp {
       color: #f8fafc;
-      font-size: 1.4rem;
+      font-size: 1.6rem;
       font-weight: 700;
-      margin: 4px 0;
+      margin: 8px 0;
     }
 
     .forecast-item .desc {
       color: #e2e8f0;
-      font-size: 0.8rem;
-      line-height: 1.2;
-    }
-
-    .forecast-item img {
-      width: 45px;
-      height: 45px;
-      margin: 4px auto;
+      font-size: 0.85rem;
     }
 
     /* Labā kolonna — galerija */
     .gallery-panel {
       background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(20px);
-      border-radius: 20px;
+      border-radius: 24px;
       border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 20px;
+      padding: 24px;
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -277,26 +246,23 @@
       font-size: 1.6rem;
       font-weight: 700;
       color: #fbbf24;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
       text-transform: uppercase;
       letter-spacing: 1px;
-      flex-shrink: 0;
     }
 
     .gallery-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
       flex: 1;
-      overflow-y: auto;
     }
 
     .gallery-item {
       position: relative;
-      border-radius: 12px;
+      border-radius: 16px;
       overflow: hidden;
       background: rgba(255, 255, 255, 0.05);
-      aspect-ratio: 4/3;
     }
 
     .gallery-item img {
@@ -317,13 +283,13 @@
       right: 0;
       background: linear-gradient(transparent, rgba(0,0,0,0.8));
       color: #f8fafc;
-      padding: 16px 8px 8px;
-      font-size: 0.85rem;
+      padding: 20px 12px 12px;
+      font-size: 0.9rem;
     }
 
     .loading {
       color: #94a3b8;
-      font-size: 1rem;
+      font-size: 1.2rem;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -334,9 +300,8 @@
       background: rgba(220, 38, 38, 0.2);
       border: 1px solid rgba(220, 38, 38, 0.4);
       color: #fecaca;
-      padding: 16px;
-      border-radius: 12px;
-      font-size: 0.9rem;
+      padding: 20px;
+      border-radius: 16px;
     }
 
     /* Animācijas */
@@ -351,11 +316,6 @@
   </style>
 </head>
 <body>
-  <!-- Virsraksts pa kreisi -->
-  <div class="header">
-    <h1>NTDNN_tablo</h1>
-  </div>
-
   <div class="dashboard">
     <!-- Kreisā kolonna -->
     <div class="weekly-panel">
@@ -450,7 +410,7 @@ async function showWeather() {
     else if (main === "Snow") tip = "❄️ Notīri paneļus (sniegs)";
     
     $('currentWeatherBlock').innerHTML = `
-      <img src="${getIconUrl(icon)}" style="width:130px;height:130px;filter:drop-shadow(0 0 20px rgba(251,191,36,0.3));flex-shrink:0;">
+      <img src="${getIconUrl(icon)}" style="width:140px;height:140px;filter:drop-shadow(0 0 20px rgba(251,191,36,0.3));">
       <div class="temp-main">${temp}°</div>
       <div class="weather-info">
         <div class="weather-desc">${desc.charAt(0).toUpperCase() + desc.slice(1)}</div>
@@ -476,7 +436,7 @@ async function showHourly() {
       return `
         <div class="forecast-item">
           <div class="time">${hh}:00</div>
-          <img src="${getIconUrl(item.weather[0].icon)}" style="width:45px;height:45px;margin:4px auto;">
+          <img src="${getIconUrl(item.weather[0].icon)}" style="width:50px;height:50px;margin:8px auto;">
           <div class="temp">${Math.round(item.main.temp)}°C</div>
           <div class="desc">${item.weather[0].description}</div>
         </div>`;
@@ -510,7 +470,7 @@ async function showDays() {
       return `
         <div class="forecast-item">
           <div class="time">${labels[i]}</div>
-          <img src="${getIconUrl(icon)}" style="width:45px;height:45px;margin:4px auto;">
+          <img src="${getIconUrl(icon)}" style="width:50px;height:50px;margin:8px auto;">
           <div class="temp">${max}° / ${min}°</div>
           <div class="desc">${desc}</div>
         </div>`;
