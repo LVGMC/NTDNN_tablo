@@ -1,81 +1,31 @@
-<!DOCTYPE html>
 <html lang="lv">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Saules paneļi - Dashboard | Pilns ekrāns</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Saules paneļi - Dashboard</title>
   <style>
-    /* GLOBĀLAIS RESET - NOŅEM VISAS ATSTARPES */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
 
-    /* HTML un BODY - absolūti bez atstarpēm, sākas no pašas malas */
-    html, body {
-      width: 100%;
+    html, body { 
       height: 100%;
-      margin: 0 !important;
-      padding: 0 !important;
-      overflow-x: hidden;
-      overflow-y: auto;
-      background: linear-gradient(145deg, #0f172a 0%, #1e3a5f 50%, #0ea5e9 100%);
-      background-attachment: fixed;
-    }
-
-    /* DASHBOARD - AIZPILDA VISU PLATUMU, BEZ MARGIN, BEZ PADDING ĀRPUSĒJĀ */
-    .dashboard {
       width: 100%;
-      min-height: 100vh;
-      margin: 0 !important;
-      padding: 20px;  /* Iekšējā atstarpe, bet tas ir panelu iekšpusē, nevis malās */
+      overflow: hidden;
+      background: linear-gradient(145deg, #0f172a 0%, #1e3a5f 50%, #0ea5e9 100%);
+    }
+
+    .dashboard { 
+      height: 100vh;
+      width: 100vw;
       display: grid;
-      grid-template-columns: minmax(280px, 360px) 1fr minmax(300px, 420px);
-      gap: 20px;
-      /* ŠIS IR GALVENAIS - NEDRĪKST BŪT AUTO MARGIN! */
-      margin-left: 0 !important;
-      margin-right: 0 !important;
-      max-width: 100%;
+      grid-template-columns: minmax(280px, 1fr) 2fr minmax(300px, 1fr);
+      gap: 0;
     }
 
-    /* PĀRLIECINĀM, KA NEKAS NEPIEVIENO PAPILDUS ATSTARPES */
-    body::before,
-    body::after,
-    html::before,
-    html::after {
-      display: none !important;
-    }
-
-    /* RESPONSĪVĀ LĪDZINĀŠANA - joprojām bez atstarpēm malās */
-    @media (max-width: 1100px) {
-      .dashboard {
-        grid-template-columns: 1fr 1fr;
-        gap: 16px;
-        padding: 16px;
-      }
-      .gallery-panel {
-        grid-column: 1 / -1;
-      }
-    }
-
-    @media (max-width: 680px) {
-      .dashboard {
-        grid-template-columns: 1fr;
-        gap: 16px;
-        padding: 12px;
-      }
-      .weekly-panel, .weather-panel, .gallery-panel {
-        grid-column: 1 / -1;
-      }
-    }
-
-    /* PANEĻU STILI - NODROŠINA, KA VISS IZSKATĀS LABI */
+    /* Kreisā kolonna — nedēļas plāns */
     .weekly-panel {
       background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(20px);
-      border-radius: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-right: 1px solid rgba(255, 255, 255, 0.15);
       padding: 24px;
       display: flex;
       flex-direction: column;
@@ -96,7 +46,7 @@
       flex-direction: column;
       gap: 8px;
       overflow-y: auto;
-      max-height: calc(100vh - 140px);
+      flex: 1;
     }
 
     .plan-day {
@@ -104,6 +54,10 @@
       border-radius: 16px;
       padding: 12px 16px;
       border-left: 4px solid #fbbf24;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex-shrink: 0;
     }
 
     .plan-day strong {
@@ -125,18 +79,21 @@
       margin-top: 4px;
     }
 
+    /* Vidējā kolonna — laikapstākļi */
     .weather-panel {
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 0;
     }
 
     .main-weather {
       background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(20px);
-      border-radius: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-right: 1px solid rgba(255, 255, 255, 0.15);
       padding: 30px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
     }
 
     .date-header {
@@ -146,8 +103,6 @@
       margin-bottom: 20px;
       padding-bottom: 16px;
       border-bottom: 2px solid rgba(251, 191, 36, 0.3);
-      flex-wrap: wrap;
-      gap: 10px;
     }
 
     .today-date {
@@ -169,7 +124,7 @@
       display: flex;
       align-items: center;
       gap: 30px;
-      flex-wrap: wrap;
+      flex: 1;
     }
 
     .temp-main {
@@ -201,7 +156,6 @@
       gap: 30px;
       color: #e2e8f0;
       font-size: 1.1rem;
-      flex-wrap: wrap;
     }
 
     .weather-details span {
@@ -213,15 +167,16 @@
     .forecast-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 20px;
+      height: 280px;
     }
 
     .forecast-box {
       background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(20px);
-      border-radius: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-right: 1px solid rgba(255, 255, 255, 0.15);
       padding: 20px;
+      display: flex;
+      flex-direction: column;
     }
 
     .forecast-box h3 {
@@ -235,8 +190,8 @@
     .forecast-content {
       display: flex;
       gap: 12px;
-      align-items: stretch;
-      flex-wrap: wrap;
+      flex: 1;
+      align-items: center;
     }
 
     .forecast-item {
@@ -245,7 +200,10 @@
       border-radius: 16px;
       padding: 16px;
       text-align: center;
-      min-width: 90px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .forecast-item .time {
@@ -266,12 +224,14 @@
       font-size: 0.85rem;
     }
 
+    /* Labā kolonna — galerija */
     .gallery-panel {
       background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(20px);
-      border-radius: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
       padding: 24px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
     }
 
     .gallery-panel h2 {
@@ -285,9 +245,9 @@
 
     .gallery-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      grid-template-columns: 1fr 1fr;
       gap: 12px;
-      max-height: calc(100vh - 140px);
+      flex: 1;
       overflow-y: auto;
     }
 
@@ -296,7 +256,7 @@
       border-radius: 16px;
       overflow: hidden;
       background: rgba(255, 255, 255, 0.05);
-      aspect-ratio: 4 / 3;
+      aspect-ratio: 4/3;
     }
 
     .gallery-item img {
@@ -343,568 +303,72 @@
       0%, 100% { opacity: 1; }
       50% { opacity: 0.5; }
     }
-  </style>
-</head>
-<body>
-  <div class="dashboard">
-    <div class="weekly-panel">
-      <h2>📋 Nedēļas plāns</h2>
-      <div class="plan-list" id="weeklyPlanList">
-        <div class="loading">Ielādē...</div>
-      </div>
-    </div>
 
-    <div class="weather-panel">
-      <div class="main-weather">
-        <div class="date-header">
-          <div class="today-date" id="currentDate">--</div>
-          <div class="solar-badge">☀️ Saules aktivitāte</div>
-        </div>
-        <div class="current-weather-display" id="currentWeatherBlock">
-          <div class="loading">Ielādē laikapstākļus...</div>
-        </div>
-      </div>
-
-      <div class="forecast-row">
-        <div class="forecast-box">
-          <h3>⏱️ Nākamās 3 stundas</h3>
-          <div class="forecast-content" id="hourly3h">
-            <div class="loading">Ielādē...</div>
-          </div>
-        </div>
-        <div class="forecast-box">
-          <h3>📅 Nākamās 3 dienas</h3>
-          <div class="forecast-content" id="threeDaysForecast">
-            <div class="loading">Ielādē...</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="gallery-panel">
-      <h2>📸 Galerija</h2>
-      <div class="gallery-grid" id="googlePhotosContainer">
-        <div class="loading" style="grid-column: 1 / -1;">Ielādē attēlus...</div>
-      </div>
-    </div>
-  </div>
-
-<script>
-const API_KEY = 'c43d82886b01f58c9754b116e45751b7';
-const LAT = 56.9496;
-const LON = 24.1052;
-
-function $(id) { return document.getElementById(id); }
-
-function updateDate() {
-  const now = new Date();
-  const options = { weekday: 'long', day: 'numeric', month: 'long' };
-  let formatted = now.toLocaleDateString('lv-LV', options);
-  formatted = formatted.charAt(0).toUpperCase() + formatted.slice(1);
-  $('currentDate').textContent = formatted;
-}
-
-function getIconUrl(icon) { 
-  return `https://openweathermap.org/img/wn/${icon}@4x.png`; 
-}
-
-async function fetchWeather() {
-  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${LAT}&lon=${LON}&appid=${API_KEY}&units=metric&lang=lv`;
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return await res.json();
-}
-
-async function fetchForecast() {
-  const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${LAT}&lon=${LON}&appid=${API_KEY}&units=metric&lang=lv`;
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return await res.json();
-}
-
-async function showWeather() {
-  try {
-    const w = await fetchWeather();
-    const temp = Math.round(w.main.temp);
-    const feels = Math.round(w.main.feels_like);
-    const desc = w.weather[0].description;
-    const icon = w.weather[0].icon;
-    const main = w.weather[0].main;
-    
-    let tip = "🌍 Normāli apstākļi saules paneļiem";
-    if (main === "Clear") tip = "☀️ Lieliska diena saules paneļiem!";
-    else if (main === "Clouds") tip = "⛅ Vidēja efektivitāte (mākoņi)";
-    else if (main === "Rain") tip = "🌧️ Zema ražība (lietus)";
-    else if (main === "Snow") tip = "❄️ Notīri paneļus (sniegs)";
-    
-    $('currentWeatherBlock').innerHTML = `
-      <img src="${getIconUrl(icon)}" style="width:140px;height:140px;filter:drop-shadow(0 8px 12px rgba(0,0,0,0.3));" alt="weather icon">
-      <div class="weather-info">
-        <div class="temp-main">${temp}°C</div>
-        <div class="weather-desc">${desc.charAt(0).toUpperCase() + desc.slice(1)}</div>
-        <div class="solar-tip">${tip}</div>
-        <div class="weather-details">
-          <span>🌡️ Jūtas kā ${feels}°C</span>
-          <span>💧 ${w.main.humidity}%</span>
-          <span>💨 ${Math.round(w.wind.speed)} m/s</span>
-        </div>
-      </div>`;
-  } catch (err) {
-    $('currentWeatherBlock').innerHTML = `<div class="error-message">❌ ${err.message}</div>`;
-  }
-}
-
-async function showHourly() {
-  try {
-    const f = await fetchForecast();
-    const items = f.list.slice(0, 3);
-    $('hourly3h').innerHTML = items.map(item => {
-      const t = new Date(item.dt * 1000);
-      const hh = String(t.getHours()).padStart(2, '0');
-      return `
-        <div class="forecast-item">
-          <div class="time">${hh}:00</div>
-          <img src="${getIconUrl(item.weather[0].icon)}" style="width:50px;height:50px;margin:8px auto;display:block;" alt="weather">
-          <div class="temp">${Math.round(item.main.temp)}°C</div>
-          <div class="desc">${item.weather[0].description}</div>
-        </div>`;
-    }).join('');
-  } catch (err) {
-    $('hourly3h').innerHTML = `<div class="error-message">❌ ${err.message}</div>`;
-  }
-}
-
-async function showDays() {
-  try {
-    const f = await fetchForecast();
-    const daily = {};
-    f.list.forEach(item => {
-      const d = new Date(item.dt * 1000).toLocaleDateString('lv-LV');
-      if (!daily[d]) daily[d] = { temps: [], icons: [], descs: [] };
-      daily[d].temps.push(item.main.temp);
-      daily[d].icons.push(item.weather[0].icon);
-      daily[d].descs.push(item.weather[0].description);
-    });
-    
-    const days = Object.keys(daily).slice(1, 4);
-    const labels = ['Rīt', 'Parīt', 'Pēc 3 dienām'];
-    
-    $('threeDaysForecast').innerHTML = days.map((d, i) => {
-      const data = daily[d];
-      const min = Math.round(Math.min(...data.temps));
-      const max = Math.round(Math.max(...data.temps));
-      const icon = data.icons[Math.floor(data.icons.length / 2)];
-      const desc = data.descs[Math.floor(data.descs.length / 2)];
-      return `
-        <div class="forecast-item">
-          <div class="time">${labels[i]}</div>
-          <img src="${getIconUrl(icon)}" style="width:50px;height:50px;margin:8px auto;display:block;" alt="forecast">
-          <div class="temp">${min}°…${max}°C</div>
-          <div class="desc">${desc}</div>
-        </div>`;
-    }).join('');
-  } catch (err) {
-    $('threeDaysForecast').innerHTML = `<div class="error-message">❌ ${err.message}</div>`;
-  }
-}
-
-function generatePlan() {
-  const days = ['Pirmdiena', 'Otrdiena', 'Trešdiena', 'Ceturtdiena', 'Piektdiena', 'Sestdiena', 'Svētdiena'];
-  const acts = [
-    { e: '🧹', t: 'Saules paneļu tīrīšana un pārbaude' },
-    { e: '🔋', t: 'Bateriju uzlādes optimizācija' },
-    { e: '📊', t: 'Enerģijas patēriņa analīze' },
-    { e: '☀️', t: 'Maksimāla saules izmantošana' },
-    { e: '🛠️', t: 'Invertora pārbaude un apkope' },
-    { e: '🌿', t: 'Dārza laistīšana ar saules sūkni' },
-    { e: '📈', t: 'Nedēļas atskaite par enerģiju' }
-  ];
-  
-  $('weeklyPlanList').innerHTML = days.map((day, i) => `
-    <div class="plan-day">
-      <strong>${day}</strong>
-      <p>${acts[i % 7].e} ${acts[i % 7].t}</p>
-      <p class="hours">🌞 Saules stundas: ${8 + (i % 4)}h</p>
-    </div>`).join('');
-}
-
-function loadGallery() {
-  const imageIds = [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26];
-  $('googlePhotosContainer').innerHTML = imageIds.map((id, idx) => `
-    <div class="gallery-item">
-      <img src="https://picsum.photos/id/${id}/500/400" alt="Galerijas foto ${idx+1}" loading="lazy">
-      <span>🏞️ Ainava ${idx+1}</span>
-    </div>`).join('');
-}
-
-async function init() {
-  updateDate();
-  generatePlan();
-  loadGallery();
-  await showWeather();
-  await showHourly();
-  await showDays();
-  
-  setInterval(() => {
-    updateDate();
-    showWeather();
-    showHourly();
-    showDays();
-  }, 600000);
-}
-
-document.addEventListener('DOMContentLoaded', init);
-</script>
-</body>
-</html><!DOCTYPE html>
-<html lang="lv">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Saules paneļi - Dashboard | Pilns ekrāns</title>
-  <style>
-    /* GLOBĀLAIS RESET - NOŅEM VISAS ATSTARPES */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    /* HTML un BODY - absolūti bez atstarpēm, sākas no pašas malas */
-    html, body {
-      width: 100%;
-      height: 100%;
-      margin: 0 !important;
-      padding: 0 !important;
-      overflow-x: hidden;
-      overflow-y: auto;
-      background: linear-gradient(145deg, #0f172a 0%, #1e3a5f 50%, #0ea5e9 100%);
-      background-attachment: fixed;
-    }
-
-    /* DASHBOARD - AIZPILDA VISU PLATUMU, BEZ MARGIN, BEZ PADDING ĀRPUSĒJĀ */
-    .dashboard {
-      width: 100%;
-      min-height: 100vh;
-      margin: 0 !important;
-      padding: 20px;  /* Iekšējā atstarpe, bet tas ir panelu iekšpusē, nevis malās */
-      display: grid;
-      grid-template-columns: minmax(280px, 360px) 1fr minmax(300px, 420px);
-      gap: 20px;
-      /* ŠIS IR GALVENAIS - NEDRĪKST BŪT AUTO MARGIN! */
-      margin-left: 0 !important;
-      margin-right: 0 !important;
-      max-width: 100%;
-    }
-
-    /* PĀRLIECINĀM, KA NEKAS NEPIEVIENO PAPILDUS ATSTARPES */
-    body::before,
-    body::after,
-    html::before,
-    html::after {
-      display: none !important;
-    }
-
-    /* RESPONSĪVĀ LĪDZINĀŠANA - joprojām bez atstarpēm malās */
-    @media (max-width: 1100px) {
+    /* Responsive - tablet */
+    @media (max-width: 1200px) {
       .dashboard {
         grid-template-columns: 1fr 1fr;
-        gap: 16px;
-        padding: 16px;
+        grid-template-rows: 1fr 1fr;
+      }
+      .weather-panel {
+        grid-column: 1 / -1;
+        grid-row: 1;
+      }
+      .weekly-panel {
+        grid-column: 1;
+        grid-row: 2;
+        border-right: 1px solid rgba(255, 255, 255, 0.15);
       }
       .gallery-panel {
-        grid-column: 1 / -1;
+        grid-column: 2;
+        grid-row: 2;
+      }
+      .main-weather {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+      }
+      .forecast-box {
+        border-right: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.15);
       }
     }
 
-    @media (max-width: 680px) {
+    /* Responsive - mobile */
+    @media (max-width: 768px) {
       .dashboard {
         grid-template-columns: 1fr;
-        gap: 16px;
-        padding: 12px;
+        grid-template-rows: auto auto auto;
+        overflow-y: auto;
       }
-      .weekly-panel, .weather-panel, .gallery-panel {
-        grid-column: 1 / -1;
+      .weather-panel {
+        grid-column: 1;
+        grid-row: 1;
       }
-    }
-
-    /* PANEĻU STILI - NODROŠINA, KA VISS IZSKATĀS LABI */
-    .weekly-panel {
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(20px);
-      border-radius: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    .weekly-panel h2 {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: #fbbf24;
-      margin-bottom: 16px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .plan-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      overflow-y: auto;
-      max-height: calc(100vh - 140px);
-    }
-
-    .plan-day {
-      background: rgba(251, 191, 36, 0.1);
-      border-radius: 16px;
-      padding: 12px 16px;
-      border-left: 4px solid #fbbf24;
-    }
-
-    .plan-day strong {
-      color: #fbbf24;
-      font-size: 1.1rem;
-      display: block;
-      margin-bottom: 4px;
-    }
-
-    .plan-day p {
-      color: #e2e8f0;
-      font-size: 0.95rem;
-      margin: 2px 0;
-    }
-
-    .plan-day .hours {
-      color: #94a3b8;
-      font-size: 0.8rem;
-      margin-top: 4px;
-    }
-
-    .weather-panel {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .main-weather {
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(20px);
-      border-radius: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 30px;
-    }
-
-    .date-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-      padding-bottom: 16px;
-      border-bottom: 2px solid rgba(251, 191, 36, 0.3);
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .today-date {
-      font-size: 2rem;
-      font-weight: 700;
-      color: #f8fafc;
-    }
-
-    .solar-badge {
-      background: rgba(251, 191, 36, 0.2);
-      color: #fbbf24;
-      padding: 8px 20px;
-      border-radius: 40px;
-      font-size: 0.9rem;
-      font-weight: 600;
-    }
-
-    .current-weather-display {
-      display: flex;
-      align-items: center;
-      gap: 30px;
-      flex-wrap: wrap;
-    }
-
-    .temp-main {
-      font-size: 6rem;
-      font-weight: 800;
-      color: #f8fafc;
-      line-height: 1;
-    }
-
-    .weather-info {
-      flex: 1;
-    }
-
-    .weather-desc {
-      font-size: 1.8rem;
-      color: #fbbf24;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-
-    .solar-tip {
-      font-size: 1.2rem;
-      color: #94a3b8;
-      margin-bottom: 20px;
-    }
-
-    .weather-details {
-      display: flex;
-      gap: 30px;
-      color: #e2e8f0;
-      font-size: 1.1rem;
-      flex-wrap: wrap;
-    }
-
-    .weather-details span {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .forecast-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-
-    .forecast-box {
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(20px);
-      border-radius: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 20px;
-    }
-
-    .forecast-box h3 {
-      color: #fbbf24;
-      font-size: 1.1rem;
-      margin-bottom: 16px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .forecast-content {
-      display: flex;
-      gap: 12px;
-      align-items: stretch;
-      flex-wrap: wrap;
-    }
-
-    .forecast-item {
-      flex: 1;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 16px;
-      padding: 16px;
-      text-align: center;
-      min-width: 90px;
-    }
-
-    .forecast-item .time {
-      color: #94a3b8;
-      font-size: 0.9rem;
-      margin-bottom: 8px;
-    }
-
-    .forecast-item .temp {
-      color: #f8fafc;
-      font-size: 1.6rem;
-      font-weight: 700;
-      margin: 8px 0;
-    }
-
-    .forecast-item .desc {
-      color: #e2e8f0;
-      font-size: 0.85rem;
-    }
-
-    .gallery-panel {
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(20px);
-      border-radius: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 24px;
-    }
-
-    .gallery-panel h2 {
-      font-size: 1.6rem;
-      font-weight: 700;
-      color: #fbbf24;
-      margin-bottom: 16px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 12px;
-      max-height: calc(100vh - 140px);
-      overflow-y: auto;
-    }
-
-    .gallery-item {
-      position: relative;
-      border-radius: 16px;
-      overflow: hidden;
-      background: rgba(255, 255, 255, 0.05);
-      aspect-ratio: 4 / 3;
-    }
-
-    .gallery-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.3s ease;
-    }
-
-    .gallery-item:hover img {
-      transform: scale(1.05);
-    }
-
-    .gallery-item span {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: linear-gradient(transparent, rgba(0,0,0,0.8));
-      color: #f8fafc;
-      padding: 20px 12px 12px;
-      font-size: 0.9rem;
-    }
-
-    .loading {
-      color: #94a3b8;
-      font-size: 1.2rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-      animation: pulse 2s infinite;
-    }
-
-    .error-message {
-      background: rgba(220, 38, 38, 0.2);
-      border: 1px solid rgba(220, 38, 38, 0.4);
-      color: #fecaca;
-      padding: 20px;
-      border-radius: 16px;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
+      .weekly-panel {
+        grid-column: 1;
+        grid-row: 2;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+      }
+      .gallery-panel {
+        grid-column: 1;
+        grid-row: 3;
+      }
+      .forecast-row {
+        grid-template-columns: 1fr;
+        height: auto;
+      }
+      .forecast-box {
+        border-right: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.15);
+      }
     }
   </style>
+<base target="_blank">
 </head>
 <body>
   <div class="dashboard">
+    <!-- Kreisā kolonna -->
     <div class="weekly-panel">
       <h2>📋 Nedēļas plāns</h2>
       <div class="plan-list" id="weeklyPlanList">
@@ -912,6 +376,7 @@ document.addEventListener('DOMContentLoaded', init);
       </div>
     </div>
 
+    <!-- Vidējā kolonna -->
     <div class="weather-panel">
       <div class="main-weather">
         <div class="date-header">
@@ -939,6 +404,7 @@ document.addEventListener('DOMContentLoaded', init);
       </div>
     </div>
 
+    <!-- Labā kolonna -->
     <div class="gallery-panel">
       <h2>📸 Galerija</h2>
       <div class="gallery-grid" id="googlePhotosContainer">
@@ -957,9 +423,8 @@ function $(id) { return document.getElementById(id); }
 function updateDate() {
   const now = new Date();
   const options = { weekday: 'long', day: 'numeric', month: 'long' };
-  let formatted = now.toLocaleDateString('lv-LV', options);
-  formatted = formatted.charAt(0).toUpperCase() + formatted.slice(1);
-  $('currentDate').textContent = formatted;
+  const formatted = now.toLocaleDateString('lv-LV', options);
+  $('currentDate').textContent = formatted.charAt(0).toUpperCase() + formatted.slice(1);
 }
 
 function getIconUrl(icon) { 
@@ -969,14 +434,14 @@ function getIconUrl(icon) {
 async function fetchWeather() {
   const url = `https://api.openweathermap.org/data/2.5/weather?lat=${LAT}&lon=${LON}&appid=${API_KEY}&units=metric&lang=lv`;
   const res = await fetch(url);
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  if (!res.ok) throw new Error('HTTP ' + res.status);
   return await res.json();
 }
 
 async function fetchForecast() {
   const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${LAT}&lon=${LON}&appid=${API_KEY}&units=metric&lang=lv`;
   const res = await fetch(url);
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  if (!res.ok) throw new Error('HTTP ' + res.status);
   return await res.json();
 }
 
@@ -988,15 +453,15 @@ async function showWeather() {
     const desc = w.weather[0].description;
     const icon = w.weather[0].icon;
     const main = w.weather[0].main;
-    
+
     let tip = "🌍 Normāli apstākļi saules paneļiem";
     if (main === "Clear") tip = "☀️ Lieliska diena saules paneļiem!";
     else if (main === "Clouds") tip = "⛅ Vidēja efektivitāte (mākoņi)";
     else if (main === "Rain") tip = "🌧️ Zema ražība (lietus)";
     else if (main === "Snow") tip = "❄️ Notīri paneļus (sniegs)";
-    
+
     $('currentWeatherBlock').innerHTML = `
-      <img src="${getIconUrl(icon)}" style="width:140px;height:140px;filter:drop-shadow(0 8px 12px rgba(0,0,0,0.3));" alt="weather icon">
+      <img src="${getIconUrl(icon)}" style="width:140px;height:140px;filter:drop-shadow(0 0 20px rgba(251,191,36,0.3));">
       <div class="weather-info">
         <div class="temp-main">${temp}°C</div>
         <div class="weather-desc">${desc.charAt(0).toUpperCase() + desc.slice(1)}</div>
@@ -1022,7 +487,7 @@ async function showHourly() {
       return `
         <div class="forecast-item">
           <div class="time">${hh}:00</div>
-          <img src="${getIconUrl(item.weather[0].icon)}" style="width:50px;height:50px;margin:8px auto;display:block;" alt="weather">
+          <img src="${getIconUrl(item.weather[0].icon)}" style="width:50px;height:50px;margin:8px auto;">
           <div class="temp">${Math.round(item.main.temp)}°C</div>
           <div class="desc">${item.weather[0].description}</div>
         </div>`;
@@ -1043,10 +508,10 @@ async function showDays() {
       daily[d].icons.push(item.weather[0].icon);
       daily[d].descs.push(item.weather[0].description);
     });
-    
+
     const days = Object.keys(daily).slice(1, 4);
     const labels = ['Rīt', 'Parīt', 'Pēc 3 dienām'];
-    
+
     $('threeDaysForecast').innerHTML = days.map((d, i) => {
       const data = daily[d];
       const min = Math.round(Math.min(...data.temps));
@@ -1056,8 +521,8 @@ async function showDays() {
       return `
         <div class="forecast-item">
           <div class="time">${labels[i]}</div>
-          <img src="${getIconUrl(icon)}" style="width:50px;height:50px;margin:8px auto;display:block;" alt="forecast">
-          <div class="temp">${min}°…${max}°C</div>
+          <img src="${getIconUrl(icon)}" style="width:50px;height:50px;margin:8px auto;">
+          <div class="temp">${min}° / ${max}°C</div>
           <div class="desc">${desc}</div>
         </div>`;
     }).join('');
@@ -1077,7 +542,7 @@ function generatePlan() {
     { e: '🌿', t: 'Dārza laistīšana ar saules sūkni' },
     { e: '📈', t: 'Nedēļas atskaite par enerģiju' }
   ];
-  
+
   $('weeklyPlanList').innerHTML = days.map((day, i) => `
     <div class="plan-day">
       <strong>${day}</strong>
@@ -1087,11 +552,11 @@ function generatePlan() {
 }
 
 function loadGallery() {
-  const imageIds = [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26];
-  $('googlePhotosContainer').innerHTML = imageIds.map((id, idx) => `
+  const ids = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
+  $('googlePhotosContainer').innerHTML = ids.map((id, i) => `
     <div class="gallery-item">
-      <img src="https://picsum.photos/id/${id}/500/400" alt="Galerijas foto ${idx+1}" loading="lazy">
-      <span>🏞️ Ainava ${idx+1}</span>
+      <img src="https://picsum.photos/id/${id}/400/300" alt="Foto ${i+1}">
+      <span>Foto ${i+1}</span>
     </div>`).join('');
 }
 
@@ -1102,7 +567,7 @@ async function init() {
   await showWeather();
   await showHourly();
   await showDays();
-  
+
   setInterval(() => {
     updateDate();
     showWeather();
