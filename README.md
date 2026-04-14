@@ -29,7 +29,7 @@
       backdrop-filter: blur(20px);
       border-radius: 20px;
       border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 20px;
+      padding: 16px;
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -39,7 +39,7 @@
       font-size: 1.6rem;
       font-weight: 700;
       color: #fbbf24;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       text-transform: uppercase;
       letter-spacing: 1px;
       flex-shrink: 0;
@@ -55,7 +55,7 @@
 
     .plan-day {
       background: rgba(251, 191, 36, 0.1);
-      border-radius: 12px;
+      border-radius: 1px;
       padding: 12px 14px;
       border-left: 3px solid #fbbf24;
       flex-shrink: 0;
@@ -93,7 +93,7 @@
       backdrop-filter: blur(20px);
       border-radius: 20px;
       border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 24px;
+      padding: 4px;
       flex: 1;
       display: flex;
       flex-direction: column;
