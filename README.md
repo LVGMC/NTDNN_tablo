@@ -21,6 +21,30 @@
       gap: 0;
     }
 
+    /* Pilnekrāna poga */
+    #fullscreenBtn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 10000;
+      background: #fbbf24;
+      color: #0f172a;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(251,191,36,0.4);
+      transition: all 0.3s ease;
+      font-size: 0.95rem;
+    }
+
+    #fullscreenBtn:hover {
+      background: #f59e0b;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(251,191,36,0.5);
+    }
+
     /* Kreisā kolonna — nedēļas plāns */
     .weekly-panel {
       background: rgba(255, 255, 255, 0.08);
@@ -362,11 +386,19 @@
         border-right: none;
         border-top: 1px solid rgba(255, 255, 255, 0.15);
       }
+      #fullscreenBtn {
+        top: 10px;
+        right: 10px;
+        padding: 8px 16px;
+        font-size: 0.85rem;
+      }
     }
   </style>
 <base target="_blank">
 </head>
 <body>
+  <button id="fullscreenBtn" onclick="toggleFullscreen()">⛶ Pilnekrāns</button>
+  
   <div class="dashboard">
     <!-- Kreisā kolonna -->
     <div class="weekly-panel">
@@ -419,6 +451,24 @@ const LAT = 56.9496;
 const LON = 24.1052;
 
 function $(id) { return document.getElementById(id); }
+
+function toggleFullscreen() {
+  const btn = document.getElementById('fullscreenBtn');
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen();
+    btn.textContent = '⛶ Iziet';
+  } else {
+    document.exitFullscreen();
+    btn.textContent = '⛶ Pilnekrāns';
+  }
+}
+
+document.addEventListener('fullscreenchange', () => {
+  const btn = document.getElementById('fullscreenBtn');
+  if (!document.fullscreenElement) {
+    btn.textContent = '⛶ Pilnekrāns';
+  }
+});
 
 function updateDate() {
   const now = new Date();
