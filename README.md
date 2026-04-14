@@ -1,8 +1,9 @@
+<!DOCTYPE html>
 <html lang="lv">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Saules paneļi - Dashboard</title>
+  <title>NTDNN_tablo</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
     
@@ -13,14 +14,27 @@
       background: linear-gradient(145deg, #0f172a 0%, #1e3a5f 50%, #0ea5e9 100%);
     }
 
+    /* Virsraksts pa kreisi, nevis centrā */
+    .header {
+      padding: 16px 16px 0 16px;
+      text-align: left;
+    }
+    
+    .header h1 {
+      color: #38bdf8;
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin: 0;
+    }
+
     .dashboard { 
-      height: 100vh; 
+      height: calc(100vh - 60px); /* Atņemu virsraksta augstumu */
       width: 100vw; 
       display: grid; 
       grid-template-columns: 340px 1fr 360px; 
       gap: 16px; 
       padding: 16px;
-      /* NOŅĒMU margin: auto - tas centrēja */
+      /* NAV margin: auto - sākam no kreisās malas! */
     }
 
     /* Kreisā kolonna — nedēļas plāns */
@@ -29,7 +43,7 @@
       backdrop-filter: blur(20px);
       border-radius: 20px;
       border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 16px;
+      padding: 20px;
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -39,7 +53,7 @@
       font-size: 1.6rem;
       font-weight: 700;
       color: #fbbf24;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       text-transform: uppercase;
       letter-spacing: 1px;
       flex-shrink: 0;
@@ -55,7 +69,7 @@
 
     .plan-day {
       background: rgba(251, 191, 36, 0.1);
-      border-radius: 1px;
+      border-radius: 12px;
       padding: 12px 14px;
       border-left: 3px solid #fbbf24;
       flex-shrink: 0;
@@ -93,7 +107,7 @@
       backdrop-filter: blur(20px);
       border-radius: 20px;
       border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 4px;
+      padding: 24px;
       flex: 1;
       display: flex;
       flex-direction: column;
@@ -337,6 +351,11 @@
   </style>
 </head>
 <body>
+  <!-- Virsraksts pa kreisi -->
+  <div class="header">
+    <h1>NTDNN_tablo</h1>
+  </div>
+
   <div class="dashboard">
     <!-- Kreisā kolonna -->
     <div class="weekly-panel">
