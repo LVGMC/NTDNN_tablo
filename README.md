@@ -1,45 +1,76 @@
-<!DOCTYPE html>
 <html lang="lv">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Saules paneļi - Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Saules paneļi - Dashboard | Pilns ekrāns</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
-    
-    /* ✅ LABOJUMS #1: neliekam overflow: hidden; citādi TV nogriež platumu/augstumu */
-    html, body { 
+    /* GLOBĀLAIS RESET - pilnīga kontrole pār margin/padding */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* HTML un BODY - bez jebkādām atstarpēm, pilns platums un augstums */
+    html, body {
+      width: 100%;
       height: 100%;
-      width: 100%;
-      overflow-x: hidden;  /* paslēpj horizontālo, ja kādreiz parādās */
-      overflow-y: auto;    /* ļauj redzēt visu, ja kaut kas neietilpst augstumā */
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;   /* paslēpj horizontālo joslu, ja kaut kas pārkāpj */
+      overflow-y: auto;      /* vertikālā ritināšana ir atļauta, bet nekas netiek nogriezts */
       background: linear-gradient(145deg, #0f172a 0%, #1e3a5f 50%, #0ea5e9 100%);
+      /* fona gradientam jāaptver viss, arī ritināšanas gadījumā */
+      background-attachment: fixed;
     }
 
-    .dashboard { 
-      min-height: 100vh;
+    /* DASHBOARD KONTEINERS - pilns platums bez jebkādas papildus atkāpes */
+    .dashboard {
       width: 100%;
+      min-height: 100vh;     /* vismaz visa ekrāna augstums, bet var augt */
       display: grid;
-
-      /* ✅ LABOJUMS #2: elastīgas kolonnas, lai nekad neizstumj ārpus ekrāna */
-      grid-template-columns: minmax(280px, 380px) 1fr minmax(300px, 420px);
-
-      gap: 20px; 
+      
+      /* TRĪS KOLONNAS, KAS AIZPILDA VISU PLATUMU: 
+         kreisā (min 260px, elastīga), vidējā (1fr - aizņem lieko), labā (min 280px, elastīga) */
+      grid-template-columns: minmax(280px, 360px) 1fr minmax(300px, 420px);
+      
+      /* Atstarpes iekšpusē */
+      gap: 20px;
+      
+      /* PADDING AP DASHBOARD - BET TAS NEKAVĒ AIZPILDĪT VISU PLATUMU, 
+         jo padding ir iekšējā atstarpe, nevis mala */
       padding: 20px;
+      
+      /* Nodrošina, ka konteiners sākas no pašas kreisās malas (bez jebkāda auto margin) */
+      margin: 0 auto;
     }
 
-    /* ✅ LABOJUMS #3: ja TV/pārlūks ir šaurāks (vai zoom), pārkārto, nevis nogriež */
-    @media (max-width: 1200px) {
+    /* RESPONSĪVĀ LĪDZINĀŠANA - šaurākos ekrānos pāriet uz divām kolonnām,
+       bet joprojām pilns platums bez atstarpēm malās */
+    @media (max-width: 1100px) {
       .dashboard {
         grid-template-columns: 1fr 1fr;
-        grid-auto-rows: minmax(200px, auto);
+        gap: 16px;
+        padding: 16px;
       }
       .gallery-panel {
         grid-column: 1 / -1;
       }
     }
 
-    /* Kreisā kolonna — nedēļas plāns */
+    /* Ļoti šaurām ierīcēm (mobilais) - viena kolonna, pilns platums */
+    @media (max-width: 680px) {
+      .dashboard {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 12px;
+      }
+      .weekly-panel, .weather-panel, .gallery-panel {
+        grid-column: 1 / -1;
+      }
+    }
+
+    /* ---------- PANEĻU STILI (NEMAINĪTI, BET NODROŠINA, KA IZSKATĀS LABI) ---------- */
     .weekly-panel {
       background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(20px);
@@ -49,6 +80,7 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
+      transition: all 0.2s ease;
     }
 
     .weekly-panel h2 {
@@ -64,7 +96,8 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
-      overflow: hidden;
+      overflow-y: auto;
+      max-height: calc(100vh - 140px);
     }
 
     .plan-day {
@@ -72,7 +105,6 @@
       border-radius: 16px;
       padding: 12px 16px;
       border-left: 4px solid #fbbf24;
-      flex: 1;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -97,7 +129,6 @@
       margin-top: 4px;
     }
 
-    /* Vidējā kolonna — laikapstākļi */
     .weather-panel {
       display: flex;
       flex-direction: column;
@@ -122,6 +153,8 @@
       margin-bottom: 20px;
       padding-bottom: 16px;
       border-bottom: 2px solid rgba(251, 191, 36, 0.3);
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
     .today-date {
@@ -143,6 +176,7 @@
       display: flex;
       align-items: center;
       gap: 30px;
+      flex-wrap: wrap;
       flex: 1;
     }
 
@@ -175,6 +209,7 @@
       gap: 30px;
       color: #e2e8f0;
       font-size: 1.1rem;
+      flex-wrap: wrap;
     }
 
     .weather-details span {
@@ -187,7 +222,6 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 20px;
-      height: 280px;
     }
 
     .forecast-box {
@@ -212,7 +246,8 @@
       display: flex;
       gap: 12px;
       flex: 1;
-      align-items: center;
+      align-items: stretch;
+      flex-wrap: wrap;
     }
 
     .forecast-item {
@@ -221,7 +256,7 @@
       border-radius: 16px;
       padding: 16px;
       text-align: center;
-      height: 100%;
+      min-width: 90px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -245,7 +280,6 @@
       font-size: 0.85rem;
     }
 
-    /* Labā kolonna — galerija */
     .gallery-panel {
       background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(20px);
@@ -268,9 +302,11 @@
 
     .gallery-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
       gap: 12px;
       flex: 1;
+      overflow-y: auto;
+      max-height: calc(100vh - 140px);
     }
 
     .gallery-item {
@@ -278,6 +314,7 @@
       border-radius: 16px;
       overflow: hidden;
       background: rgba(255, 255, 255, 0.05);
+      aspect-ratio: 4 / 3;
     }
 
     .gallery-item img {
@@ -318,17 +355,28 @@
       color: #fecaca;
       padding: 20px;
       border-radius: 16px;
+      width: 100%;
     }
 
     @keyframes pulse {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.5; }
     }
+
+    /* Pielāgojums īpaši maziem augstumiem (lai nav pārmērīga ritināšana) */
+    @media (max-height: 700px) {
+      .plan-list {
+        max-height: 400px;
+      }
+      .gallery-grid {
+        max-height: 400px;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="dashboard">
-    <!-- Kreisā kolonna -->
+    <!-- Kreisā kolonna - Nedēļas plāns -->
     <div class="weekly-panel">
       <h2>📋 Nedēļas plāns</h2>
       <div class="plan-list" id="weeklyPlanList">
@@ -336,7 +384,7 @@
       </div>
     </div>
 
-    <!-- Vidējā kolonna -->
+    <!-- Vidējā kolonna - Laikapstākļi -->
     <div class="weather-panel">
       <div class="main-weather">
         <div class="date-header">
@@ -364,7 +412,7 @@
       </div>
     </div>
 
-    <!-- Labā kolonna -->
+    <!-- Labā kolonna - Galerija -->
     <div class="gallery-panel">
       <h2>📸 Galerija</h2>
       <div class="gallery-grid" id="googlePhotosContainer">
@@ -383,8 +431,9 @@ function $(id) { return document.getElementById(id); }
 function updateDate() {
   const now = new Date();
   const options = { weekday: 'long', day: 'numeric', month: 'long' };
-  const formatted = now.toLocaleDateString('lv-LV', options);
-  $('currentDate').textContent = formatted.charAt(0).toUpperCase() + formatted.slice(1);
+  let formatted = now.toLocaleDateString('lv-LV', options);
+  formatted = formatted.charAt(0).toUpperCase() + formatted.slice(1);
+  $('currentDate').textContent = formatted;
 }
 
 function getIconUrl(icon) { 
@@ -394,14 +443,14 @@ function getIconUrl(icon) {
 async function fetchWeather() {
   const url = `https://api.openweathermap.org/data/2.5/weather?lat=${LAT}&lon=${LON}&appid=${API_KEY}&units=metric&lang=lv`;
   const res = await fetch(url);
-  if (!res.ok) throw new Error('HTTP ' + res.status);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return await res.json();
 }
 
 async function fetchForecast() {
   const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${LAT}&lon=${LON}&appid=${API_KEY}&units=metric&lang=lv`;
   const res = await fetch(url);
-  if (!res.ok) throw new Error('HTTP ' + res.status);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return await res.json();
 }
 
@@ -421,7 +470,9 @@ async function showWeather() {
     else if (main === "Snow") tip = "❄️ Notīri paneļus (sniegs)";
     
     $('currentWeatherBlock').innerHTML = `
-      <img src="${getIconUrl(icon)}" style="width:140px;height:140px;filter:drop-shadow(0eather-info">
+      <img src="${getIconUrl(icon)}" style="width:140px;height:140px;filter:drop-shadow(0 8px 12px rgba(0,0,0,0.3));" alt="weather icon">
+      <div class="weather-info">
+        <div class="temp-main">${temp}°C</div>
         <div class="weather-desc">${desc.charAt(0).toUpperCase() + desc.slice(1)}</div>
         <div class="solar-tip">${tip}</div>
         <div class="weather-details">
@@ -431,7 +482,7 @@ async function showWeather() {
         </div>
       </div>`;
   } catch (err) {
-    $('currentWeatherBlock').innerHTML = `<div class="error-message">❌ ${err.message}</div>`;
+    $('currentWeatherBlock').innerHTML = `<div class="error-message">❌ Neizdevās ielādēt laiku: ${err.message}</div>`;
   }
 }
 
@@ -439,13 +490,15 @@ async function showHourly() {
   try {
     const f = await fetchForecast();
     const items = f.list.slice(0, 3);
+    if (!items.length) throw new Error('Nav prognožu datu');
     $('hourly3h').innerHTML = items.map(item => {
       const t = new Date(item.dt * 1000);
       const hh = String(t.getHours()).padStart(2, '0');
       return `
         <div class="forecast-item">
           <div class="time">${hh}:00</div>
-          <img src="${getIconUrl(item.weather[0].icon)}" style="width:50px;height:50px;margin:8pxtemp)}°C</div>
+          <img src="${getIconUrl(item.weather[0].icon)}" style="width:50px;height:50px;margin:8px auto; display:block;" alt="weather">
+          <div class="temp">${Math.round(item.main.temp)}°C</div>
           <div class="desc">${item.weather[0].description}</div>
         </div>`;
     }).join('');
@@ -478,7 +531,9 @@ async function showDays() {
       return `
         <div class="forecast-item">
           <div class="time">${labels[i]}</div>
-          <img src="${getIconUrl(icon)}" style="width:50px;height:50px;margin:8px auto      <div class="desc">${desc}</div>
+          <img src="${getIconUrl(icon)}" style="width:50px;height:50px;margin:8px auto; display:block;" alt="forecast">
+          <div class="temp">${min}°…${max}°C</div>
+          <div class="desc">${desc}</div>
         </div>`;
     }).join('');
   } catch (err) {
@@ -507,14 +562,35 @@ function generatePlan() {
 }
 
 function loadGallery() {
-  const ids = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
-  $('googlePhotosContainer').innerHTML = ids.map((id, i) => `
+  // Izmantojam dažādus attēlus no picsum, lai galerija izskatās daudzveidīga
+  // un aizpilda visu platumu ar režģi
+  const imageIds = [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26];
+  $('googlePhotosContainer').innerHTML = imageIds.map((id, idx) => `
     <div class="gallery-item">
-      <img src="https://picsum.photos/id/${id}/400/300" alt="Foto ${i+1pan>
+      <img src="https://picsum.photos/id/${id}/500/400" alt="Galerijas foto ${idx+1}" loading="lazy">
+      <span>🏞️ Ainava ${idx+1}</span>
     </div>`).join('');
 }
 
+// Funkcija, lai nodrošinātu, ka dashboard vienmēr izmanto pilnu platumu
+// (papildus piesardzība, ja kaut kas mēģina ierobežot)
+function enforceFullWidth() {
+  // Pārliecināmies, ka body un html nav nekādu ierobežojumu
+  document.documentElement.style.margin = '0';
+  document.documentElement.style.padding = '0';
+  document.body.style.margin = '0';
+  document.body.style.padding = '0';
+  // Dashboard jau ir width: 100%, bet lai nebūtu jebkāda baltas malas
+  const dash = document.querySelector('.dashboard');
+  if (dash) {
+    dash.style.marginLeft = '0';
+    dash.style.marginRight = '0';
+    dash.style.maxWidth = '100%';
+  }
+}
+
 async function init() {
+  enforceFullWidth();
   updateDate();
   generatePlan();
   loadGallery();
@@ -522,14 +598,21 @@ async function init() {
   await showHourly();
   await showDays();
   
+  // Atjaunināšana ik pēc 10 minūtēm
   setInterval(() => {
     updateDate();
     showWeather();
     showHourly();
     showDays();
   }, 600000);
+  
+  // Papildus: ja pārlūka izmērs mainās, pārliecināmies, ka layout paliek pilns
+  window.addEventListener('resize', () => {
+    enforceFullWidth();
+  });
 }
 
+// Palaist pēc DOM gatavības
 document.addEventListener('DOMContentLoaded', init);
 </script>
 </body>
